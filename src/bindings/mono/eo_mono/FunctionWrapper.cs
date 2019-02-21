@@ -70,7 +70,15 @@ public enum FunctionLoadResultKind { Success, LibraryNotFound, FunctionNotFound 
 public class FunctionLoadResult<T>
 {
     public FunctionLoadResultKind Kind;
-    public T Delegate;
+    public T _Delegate;
+    public T Delegate
+    {
+        get {
+            if (_Delegate == null)
+                throw new InvalidOperationException($"Trying to get Delegate while not loaded. Load result: {Kind}");
+            return _Delegate;
+        }
+    }
 
     public FunctionLoadResult(FunctionLoadResultKind kind)
     {
@@ -78,7 +86,7 @@ public class FunctionLoadResult<T>
     }
     public FunctionLoadResult(T Delegate)
     {
-        this.Delegate = Delegate;
+        this._Delegate = Delegate;
         this.Kind = FunctionLoadResultKind.Success;
     }
 }
