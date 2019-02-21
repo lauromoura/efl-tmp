@@ -8,16 +8,16 @@ public partial class FunctionInterop
     public static IntPtr LoadFunctionPointer(string moduleName, string functionName)
     {
         NativeModule module = new NativeModule(moduleName);
-        Eina.Log.Debug($"searching {module.Module} for {functionName}");
+        Console.WriteLine($"searching {module.Module} for {functionName}");
         var s = FunctionInterop.dlsym(module.Module, functionName);
-        Eina.Log.Debug($"searching {module.Module} for{functionName}, result {s}");
+        Console.WriteLine($"searching {module.Module} for{functionName}, result {s}");
         return s;
     }
     public static IntPtr LoadFunctionPointer(string functionName)
     {
-        Eina.Log.Debug($"searching {null} for {functionName}");
+        Console.WriteLine($"searching {null} for {functionName}");
         var s = FunctionInterop.dlsym(IntPtr.Zero, functionName);
-        Eina.Log.Debug($"searching {null} for {functionName}, result {s}");
+        Console.WriteLine($"searching {null} for {functionName}, result {s}");
         return s;
     }
 }
@@ -26,6 +26,7 @@ public class FunctionWrapper<T>
 {
     private Lazy<FunctionLoadResult<T>> loadResult;
     private NativeModule module; // so it doesn't get unloaded
+    private string functionName;
 
     private static FunctionLoadResult<T> LazyInitialization(NativeModule module, string functionName)
     {
@@ -49,6 +50,7 @@ public class FunctionWrapper<T>
     public FunctionWrapper(NativeModule module, string functionName)
     {
         this.module = module;
+        this.functionName = functionName;
         loadResult = new Lazy<FunctionLoadResult<T>>
             (() =>
             {
@@ -60,6 +62,7 @@ public class FunctionWrapper<T>
     {
         get
         {
+            Console.WriteLine($"Getting value for function named {functionName}: {loadResult.Value}");
             return loadResult.Value;
         }
     }

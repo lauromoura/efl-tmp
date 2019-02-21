@@ -10,9 +10,9 @@ public partial class FunctionInterop
         
     public static IntPtr LoadFunctionPointer(IntPtr nativeLibraryHandle, string functionName)
     {
-        Eina.Log.Debug("searching {nativeLibraryHandle} for {functionName}");
+        Console.WriteLine($"searching 0x{nativeLibraryHandle.ToInt64():x} for {functionName}");
         var s = FunctionInterop.dlsym(nativeLibraryHandle, functionName);
-        Eina.Log.Debug("searching {nativeLibraryHandle} for {functionName}, result {s}");
+        Console.WriteLine($"searching 0x{nativeLibraryHandle.ToInt64():x} for {functionName}, result {s}");
         return s;
     }
 }
