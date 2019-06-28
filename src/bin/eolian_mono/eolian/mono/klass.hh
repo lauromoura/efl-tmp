@@ -106,6 +106,9 @@ struct klass
           .generate(sink, attributes::unused, iface_cxt))
          return false;
 
+       if(!as_generator("[Efl.Eo.GeneratedEntity]\n").generate(sink, attributes::unused, iface_cxt))
+         return false;
+
        if(!as_generator
         (
          "public " /*<< class_type*/ "interface" /*<<*/ " " << string << " : "
@@ -275,6 +278,7 @@ struct klass
             (
              documentation
              << "[" << name_helpers::klass_full_native_inherit_name(cls) << "]\n"
+             << "[Efl.Eo.GeneratedEntity]\n"
              << "public " << class_type << " " << name_helpers::klass_concrete_name(cls) << " : "
              << (klass_full_concrete_or_interface_name % ",") // classes
              << (root ? "Efl.Eo.EoWrapper" : "") // ... or root

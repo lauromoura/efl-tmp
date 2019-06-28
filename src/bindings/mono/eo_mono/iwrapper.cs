@@ -775,6 +775,18 @@ public class PrivateNativeClass : NativeClass
     }
 }
 
+[System.AttributeUsage(System.AttributeTargets.Class |
+                       System.AttributeTargets.Interface |
+                       System.AttributeTargets.Enum |
+                       System.AttributeTargets.Delegate |
+                       System.AttributeTargets.Struct,
+                       AllowMultiple = false,
+                       Inherited = false)
+]
+public class GeneratedEntity: System.Attribute
+{
+}
+
 public interface IWrapper
 {
     /// <summary>Pointer to internal Eo instance.</summary>
