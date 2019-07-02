@@ -275,6 +275,7 @@ struct struct_internal_definition_generator
          (
           indent << "#pragma warning disable CS1591\n\n"
           << indent << "///<summary>Internal wrapper for struct " << string << ".</summary>\n"
+          << indent << "[Efl.Eo.GeneratedEntity]\n"
           << indent << "[StructLayout(LayoutKind.Sequential)]\n"
           << indent << "public struct " << string << "\n"
           << indent << "{\n"
